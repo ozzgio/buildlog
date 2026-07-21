@@ -2,8 +2,8 @@
 
 one:
   body: MyText
-  link: MyString
+  link: https://example.com
 
 two:
   body: MyText
-  link: MyString
+  link: https://example.com
