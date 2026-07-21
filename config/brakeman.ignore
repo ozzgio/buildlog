@@ -1,0 +1,18 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "42df3838552ed16026407ef424e930400251713dad13b3d0df689a78c7310514",
+      "note": "Entry#link is validated with an anchored https?:// format (app/models/entry.rb). Brakeman can't see model validations, so it flags the href regardless.",
+      "code": null,
+      "link": null
+    },
+    {
+      "fingerprint": "5f958f6f840a84f1e4577cc940e0a33e6a767ad78d5f481ee522fd38bf731b92",
+      "note": "Entry#link is validated with an anchored https?:// format (app/models/entry.rb). Brakeman can't see model validations, so it flags the href regardless.",
+      "code": null,
+      "link": null
+    }
+  ],
+  "updated": "2026-07-21 08:25:00 +0000",
+  "brakeman_version": "8.0.5"
+}
