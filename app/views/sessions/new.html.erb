@@ -1,0 +1,15 @@
+<div class="card bg-base-100 shadow-sm max-w-md mx-auto">
+  <div class="card-body">
+    <h1 class="card-title text-2xl">Sign in</h1>
+
+    <%= form_with url: session_url, class: "flex flex-col gap-4" do |form| %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Email address", value: params[:email_address], class: "input input-bordered w-full" %>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Password", maxlength: 72, class: "input input-bordered w-full" %>
+
+      <div class="flex items-center justify-between">
+        <%= form.submit "Sign in", class: "btn btn-primary" %>
+        <%= link_to "Forgot password?", new_password_path, class: "link link-hover text-sm" %>
+      </div>
+    <% end %>
+  </div>
+</div>

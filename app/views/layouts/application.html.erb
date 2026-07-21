@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Buildlog" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Buildlog">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-screen bg-base-200">
+    <div class="navbar bg-base-100 shadow-sm px-5">
+      <div class="flex-1">
+        <%= link_to "buildlog", root_path, class: "btn btn-ghost text-xl" %>
+      </div>
+      <div class="flex-none gap-2">
+        <% if authenticated? %>
+          <%= link_to "New entry", new_entry_path, class: "btn btn-primary btn-sm" %>
+          <%= button_to "Sign out", session_path, method: :delete, class: "btn btn-ghost btn-sm" %>
+        <% else %>
+          <%= link_to "Sign in", new_session_path, class: "btn btn-ghost btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+
+    <main class="container mx-auto max-w-2xl px-5 py-10">
+      <% if notice = flash[:notice] %>
+        <div role="alert" class="alert alert-success mb-6"><span><%= notice %></span></div>
+      <% end %>
+      <% if alert = flash[:alert] %>
+        <div role="alert" class="alert alert-error mb-6"><span><%= alert %></span></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

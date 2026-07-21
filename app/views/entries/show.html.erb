@@ -1,0 +1,15 @@
+<% content_for :title, "buildlog" %>
+
+<%= link_to "← back", entries_path, class: "link link-hover text-sm mb-6 inline-block" %>
+
+<article class="card bg-base-100 shadow-sm">
+  <div class="card-body">
+    <time datetime="<%= @entry.created_at.iso8601 %>" class="text-sm text-base-content/60">
+      <%= @entry.created_at.strftime("%b %-d, %Y · %H:%M") %>
+    </time>
+    <p class="whitespace-pre-wrap"><%= @entry.body %></p>
+    <% if @entry.link.present? %>
+      <%= link_to @entry.link, @entry.link, class: "link link-primary text-sm break-all", target: "_blank", rel: "noopener" %>
+    <% end %>
+  </div>
+</article>

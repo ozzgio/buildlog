@@ -1,0 +1,22 @@
+<% content_for :title, "New entry — buildlog" %>
+
+<div class="card bg-base-100 shadow-sm">
+  <div class="card-body">
+    <h1 class="card-title text-2xl mb-2">New entry</h1>
+
+    <%= form_with model: @entry, class: "flex flex-col gap-4" do |form| %>
+      <% if @entry.errors.any? %>
+        <div role="alert" class="alert alert-error">
+          <span><%= @entry.errors.full_messages.to_sentence %></span>
+        </div>
+      <% end %>
+
+      <%= form.text_area :body, rows: 4, autofocus: true, placeholder: "What did you build or learn today?", class: "textarea textarea-bordered w-full" %>
+      <%= form.url_field :link, placeholder: "Link (optional)", class: "input input-bordered w-full" %>
+
+      <div>
+        <%= form.submit "Post", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
