@@ -21,12 +21,19 @@ services:
       - "3007:3000"
     volumes:
       - .:/app
+      # Own SQLite database, separate from both the host's local dev DB and
+      # production — this mount shadows ./storage from the bind mount above
+      # with a container-only named volume.
+      - buildlog_nuc_storage:/app/storage
     networks:
       default:
       npm:
         aliases:
           - buildlog-nuc
     restart: unless-stopped
+
+volumes:
+  buildlog_nuc_storage:
 
 networks:
   npm:
