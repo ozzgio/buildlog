@@ -28,7 +28,3 @@ linters:
   # Require autocomplete on inputs
   RequireInputAutocomplete:
     enabled: true
-
-# Auto-correctable linters
-autocorrect:
-  enabled: true
