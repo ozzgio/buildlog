@@ -8,14 +8,13 @@ services:
     environment:
       RAILS_ENV: development
       PORT: "3000"
-      BINDING: "0.0.0.0"
     command: >
       bash -lc "
         rm -f tmp/pids/server.pid &&
         bundle install &&
         npm ci &&
         bundle exec rails db:prepare &&
-        bundle exec rails server -b 0.0.0.0 -p 3000
+        bundle exec foreman start -f Procfile.dev.nuc
       "
     ports:
       - "3007:3000"
