@@ -1,0 +1,44 @@
+<%
+ozzo_blog_icon = <<~SVG.html_safe
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+SVG
+
+github_icon = <<~SVG.html_safe
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-1.94c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.03 11.03 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.08.78 2.17v3.22c0 .3.2.66.79.55A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z" />
+  </svg>
+SVG
+
+x_icon = <<~SVG.html_safe
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.9L4.4 22H1.2l8.1-9.3L1 2h7l4.9 6.4L18.9 2zm-1.2 18h1.9L7.4 4h-2l12.3 16z" />
+  </svg>
+SVG
+
+rss_icon = <<~SVG.html_safe
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+  </svg>
+SVG
+
+social_links = [
+  { url: "https://ozzo.blog", title: "ozzo.blog", icon: ozzo_blog_icon },
+  { url: "https://github.com/ozzgio/buildlog", title: "Source on GitHub", icon: github_icon },
+  { url: "https://x.com/ozzgio_", title: "@ozzgio_ on X", icon: x_icon },
+  { url: feed_url, title: "RSS feed", icon: rss_icon }
+]
+%>
+<% social_links.each do |item| %>
+  <% link = link_to(item[:icon], item[:url], class: "btn btn-ghost btn-sm", title: item[:title], target: "_blank", rel: "noopener") %>
+  <% if local_assigns[:li] %>
+    <li><%= link %></li>
+  <% else %>
+    <%= link %>
+  <% end %>
+<% end %>
