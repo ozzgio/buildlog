@@ -1,0 +1,34 @@
+# .erb-lint.yml
+#
+# Linter names below are the ones actually registered by erb_lint 0.9.0
+# (the version pinned in Gemfile.lock) — run `bundle exec erb_lint --help`
+# to see the current list before adding more.
+---
+exclude:
+  - "vendor/**/*"
+  - "node_modules/**/*"
+
+linters:
+  # Catch malformed / unparseable ERB
+  ParserErrors:
+    enabled: true
+
+  # Require exactly one space after `<%` and before `%>`
+  SpaceAroundErbTag:
+    enabled: true
+
+  # No trailing whitespace
+  TrailingWhitespace:
+    enabled: true
+
+  # Exactly one newline at the end of the file
+  FinalNewline:
+    enabled: true
+
+  # Require autocomplete on inputs
+  RequireInputAutocomplete:
+    enabled: true
+
+# Auto-correctable linters
+autocorrect:
+  enabled: true

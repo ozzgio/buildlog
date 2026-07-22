@@ -1,0 +1,53 @@
+# Overcommit Git Hooks Configuration
+# Run `bin/setup_hooks` to install (once per clone).
+
+PreCommit:
+  RuboCop:
+    enabled: true
+    on_warn: fail
+
+  ErbLint:
+    enabled: true
+    command: ['bundle', 'exec', 'erb_lint']
+    flags: ['--lint-all', '--allow-no-files']
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/*.svg'
+      - '**/*.png'
+      - '**/*.ico'
+
+  HardTabs:
+    enabled: true
+
+CommitMsg:
+  MessageFormat:
+    enabled: true
+    pattern: '^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\(.+\)): .{1,50}$'
+    expected_pattern_message: 'Conventional Commits — type(scope): description (description ≤ 50 chars)'
+    sample_message: 'feat(entries): add optional link field'
+
+  TextWidth:
+    enabled: true
+    max_subject_width: 72
+
+  # Conventional Commits subjects start lowercase after the type(scope): prefix.
+  CapitalizedSubject:
+    enabled: false
+
+PrePush:
+  ProtectedBranches:
+    enabled: true
+    destructive_only: false
+    branches: ['main']
+
+  Brakeman:
+    enabled: true
+
+  RakeTarget:
+    enabled: true
+    description: 'Run the test suite'
+    command: ['bin/rails']
+    targets:
+      - 'test'

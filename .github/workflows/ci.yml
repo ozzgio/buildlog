@@ -20,10 +20,10 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   scan_js:
     runs-on: ubuntu-latest
 
@@ -64,6 +64,45 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
+
+      - name: Lint ERB templates
+        run: bundle exec erb_lint --lint-all --allow-no-files
+
+  conventional-commits:
+    name: "Conventional commits"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          COMMITS=$(git rev-list --no-merges origin/${{ github.base_ref }}..HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "No commits to validate."
+            exit 0
+          fi
+
+          INVALID=0
+          for c in $COMMITS; do
+            MSG=$(git log -1 --format=%s "$c")
+            if ! echo "$MSG" | grep -qE '^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\(.+\)): .{1,50}$'; then
+              echo "❌ Invalid commit message: $MSG"
+              INVALID=$((INVALID + 1))
+            fi
+          done
+
+          if [ "$INVALID" -gt 0 ]; then
+            echo ""
+            echo "Expected format: type(scope): description"
+            echo "Valid types: feat, fix, docs, style, refactor, perf, test, chore, ci, build"
+            exit 1
+          fi
+
+          echo "✅ All commit messages follow Conventional Commits format"
 
   test:
     runs-on: ubuntu-latest
