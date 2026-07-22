@@ -71,7 +71,6 @@ jobs:
   conventional-commits:
     name: "Conventional commits"
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -80,7 +79,16 @@ jobs:
 
       - name: Validate commit messages
         run: |
-          COMMITS=$(git rev-list --no-merges origin/${{ github.base_ref }}..HEAD)
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMITS=$(git rev-list --no-merges origin/${{ github.base_ref }}..HEAD)
+          else
+            BEFORE="${{ github.event.before }}"
+            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              BEFORE="HEAD~1"
+            fi
+            COMMITS=$(git rev-list --no-merges "$BEFORE"..HEAD)
+          fi
+
           if [ -z "$COMMITS" ]; then
             echo "No commits to validate."
             exit 0
