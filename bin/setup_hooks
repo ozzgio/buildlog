@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Install git hooks for this repo — run once after cloning.
+#
+# Enforces Conventional Commits, RuboCop, ERB Lint, Brakeman, and the
+# test suite locally, plus blocks direct pushes to main (open a PR instead).
+
+set -euo pipefail
+
+echo "→ Installing overcommit hooks …"
+bundle exec overcommit --install
+bundle exec overcommit --sign
+
+echo ""
+echo "✓ Git hooks installed. Direct pushes to 'main' are now blocked locally."
+echo "  All changes must go through a pull request."
