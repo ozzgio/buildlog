@@ -40,6 +40,10 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
+  # Allow the NUC staging container (proxied via nginx-proxy-manager) in
+  # addition to the default localhost/127.0.0.1 hosts.
+  config.hosts << "buildlog.nuc"
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
