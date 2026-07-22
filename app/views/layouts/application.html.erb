@@ -30,13 +30,23 @@
         <%= link_to "buildlog", root_path, class: "btn btn-ghost text-xl" %>
       </div>
       <div class="flex-none gap-2">
-        <%= link_to feed_url, class: "btn btn-ghost btn-sm", title: "RSS feed" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 11a9 9 0 0 1 9 9" />
-            <path d="M4 4a16 16 0 0 1 16 16" />
-            <circle cx="5" cy="19" r="1" />
-          </svg>
-        <% end %>
+        <div class="hidden sm:flex sm:items-center sm:gap-2">
+          <%= render "layouts/social_links" %>
+        </div>
+
+        <div class="dropdown dropdown-end sm:hidden">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-sm" title="Links" aria-label="Links">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+              <circle cx="5" cy="12" r="1" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-10 mt-3 w-40 p-2 shadow-sm gap-1">
+            <%= render "layouts/social_links", li: true %>
+          </ul>
+        </div>
+
         <% if authenticated? %>
           <%= link_to "New entry", new_entry_path, class: "btn btn-primary btn-sm" %>
           <%= button_to "Sign out", session_path, method: :delete, class: "btn btn-ghost btn-sm" %>
