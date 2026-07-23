@@ -1,23 +1,68 @@
 <% content_for :title, "buildlog" %>
 
-<h1 class="text-3xl font-bold mb-8">buildlog</h1>
+<section class="hero-grid">
+  <div class="space-y-6">
+    <p class="section-label">Build in public</p>
+    <h1 class="hero-title">buildlog</h1>
+    <p class="hero-copy">
+      A public build-log microblog for short notes on what shipped, what broke, and what I learned while building in Rails.
+    </p>
 
-<% if @entries.empty? %>
-  <p class="text-base-content/60">Nothing posted yet.</p>
-<% else %>
-  <div class="flex flex-col gap-4">
-    <% @entries.each do |entry| %>
-      <article class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <time datetime="<%= entry.created_at.iso8601 %>" class="text-sm text-base-content/60">
-            <%= entry.created_at.strftime("%b %-d, %Y · %H:%M") %>
-          </time>
-          <p class="whitespace-pre-wrap"><%= entry.body %></p>
-          <% if entry.link.present? %>
-            <%= link_to entry.link, entry.link, class: "link link-primary text-sm break-all", target: "_blank", rel: "noopener" %>
-          <% end %>
-        </div>
-      </article>
-    <% end %>
+    <div class="flex flex-wrap gap-3">
+      <a href="#feed" class="button-primary">Read the latest notes</a>
+      <%= link_to "Follow via RSS", feed_path, class: "button-secondary" %>
+      <% if authenticated? %>
+        <%= link_to "Write today's entry", new_entry_path, class: "button-secondary" %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+
+  <aside class="surface-panel hero-panel">
+    <div class="space-y-4">
+      <p class="section-label">How this works</p>
+      <p class="panel-copy">
+        The feed stays public. Posting stays locked to the author. Every entry is a compact snapshot of progress, decisions, or lessons worth keeping visible.
+      </p>
+    </div>
+
+    <dl class="stats-grid">
+      <div>
+        <dt>Entries</dt>
+        <dd><%= @entries.size %></dd>
+      </div>
+      <div>
+        <dt>Posting mode</dt>
+        <dd>Author only</dd>
+      </div>
+      <div>
+        <dt>Latest update</dt>
+        <dd><%= @entries.first ? entry_day_label(@entries.first) : "Pending" %></dd>
+      </div>
+      <div>
+        <dt>Format</dt>
+        <dd>Text + optional link</dd>
+      </div>
+    </dl>
+  </aside>
+</section>
+
+<section id="feed" class="mt-12 space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="space-y-2">
+      <p class="section-label">Latest entries</p>
+      <h2 class="section-title">Daily notes, kept public.</h2>
+    </div>
+    <p class="section-caption">Showing the latest <%= pluralize(@entries.size, "entry") %></p>
+  </div>
+
+  <% if @entries.empty? %>
+    <div class="surface-panel empty-state">
+      <p class="section-title">Nothing posted yet.</p>
+      <p class="panel-copy">The workshop is still quiet. Check back when the first note lands.</p>
+    </div>
+  <% else %>
+    <div class="space-y-4">
+      <%= render partial: "entry_card", collection: @entries, as: :entry %>
+    </div>
+  <% end %>
+</section>

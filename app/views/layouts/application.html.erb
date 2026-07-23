@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Buildlog" %></title>
+    <% page_title = content_for(:title) || "Buildlog" %>
+    <% page_description = content_for(:description) || "Short daily notes from the workshop." %>
+    <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Buildlog">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= page_description %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="buildlog">
+    <meta property="og:title" content="<%= page_title %>">
+    <meta property="og:description" content="<%= page_description %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= "#{request.base_url}/og-image.png" %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= page_title %>">
+    <meta name="twitter:description" content="<%= page_description %>">
+    <meta name="twitter:image" content="<%= "#{request.base_url}/og-image.png" %>">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -24,47 +42,56 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen bg-base-200">
-    <div class="navbar bg-base-100 shadow-sm px-5">
-      <div class="flex-1">
-        <%= link_to "buildlog", root_path, class: "btn btn-ghost text-xl" %>
-      </div>
-      <div class="flex-none gap-2">
-        <div class="hidden sm:flex sm:items-center sm:gap-2">
-          <%= render "layouts/social_links" %>
-        </div>
+  <body>
+    <div class="site-chrome">
+      <div class="site-glow site-glow--amber" aria-hidden="true"></div>
+      <div class="site-glow site-glow--slate" aria-hidden="true"></div>
 
-        <div class="dropdown dropdown-end sm:hidden">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-sm" title="Links" aria-label="Links">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="1" />
-              <circle cx="19" cy="12" r="1" />
-              <circle cx="5" cy="12" r="1" />
-            </svg>
+      <header class="mx-auto max-w-6xl px-5 pt-6 pb-4">
+        <div class="site-header">
+          <div class="flex items-start gap-4">
+            <%= link_to root_path, class: "brand-lockup" do %>
+              <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" class="h-7 w-7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="5" width="20" height="22" rx="3" fill="#f7fffb" />
+                  <path d="M10 10h10M10 15h14M10 20h9" stroke="#122026" stroke-width="2" stroke-linecap="round" />
+                  <path d="M10 24h7" stroke="#e11d48" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="23" cy="24" r="3" fill="#14b8a6" />
+                  <path d="M23 21.8v4.4M20.8 24h4.4" stroke="#f7fffb" stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="flex flex-col gap-1">
+                <span class="brand-name">buildlog</span>
+                <span class="brand-tagline">Short daily notes from the workshop.</span>
+              </span>
+            <% end %>
           </div>
-          <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-10 mt-3 w-40 p-2 shadow-sm gap-1">
-            <%= render "layouts/social_links", li: true %>
-          </ul>
+
+          <div class="header-actions">
+            <div class="social-strip" aria-label="External links">
+              <%= render "layouts/social_links" %>
+            </div>
+
+            <% if authenticated? %>
+              <%= link_to "New entry", new_entry_path, class: "button-primary" %>
+              <%= button_to "Sign out", session_path, method: :delete, class: "button-secondary", form_class: "inline-flex" %>
+            <% else %>
+              <%= link_to "Sign in", new_session_path, class: "button-secondary" %>
+            <% end %>
+          </div>
         </div>
+      </header>
 
-        <% if authenticated? %>
-          <%= link_to "New entry", new_entry_path, class: "btn btn-primary btn-sm" %>
-          <%= button_to "Sign out", session_path, method: :delete, class: "btn btn-ghost btn-sm" %>
-        <% else %>
-          <%= link_to "Sign in", new_session_path, class: "btn btn-ghost btn-sm" %>
-        <% end %>
-      </div>
-    </div>
-
-    <main class="container mx-auto max-w-2xl px-5 py-10">
+      <main class="mx-auto max-w-6xl px-5 pb-16">
       <% if notice = flash[:notice] %>
-        <div role="alert" class="alert alert-success mb-6"><span><%= notice %></span></div>
+        <div role="alert" class="flash flash--success mb-6"><span><%= notice %></span></div>
       <% end %>
       <% if alert = flash[:alert] %>
-        <div role="alert" class="alert alert-error mb-6"><span><%= alert %></span></div>
+        <div role="alert" class="flash flash--error mb-6"><span><%= alert %></span></div>
       <% end %>
 
       <%= yield %>
-    </main>
+      </main>
+    </div>
   </body>
 </html>
