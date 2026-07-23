@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Buildlog" %></title>
+    <% page_title = content_for(:title) || "Buildlog" %>
+    <% page_description = content_for(:description) || "Short daily notes from the workshop." %>
+    <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Buildlog">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= page_description %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="buildlog">
+    <meta property="og:title" content="<%= page_title %>">
+    <meta property="og:description" content="<%= page_description %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= "#{request.base_url}/og-image.png" %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= page_title %>">
+    <meta name="twitter:description" content="<%= page_description %>">
+    <meta name="twitter:image" content="<%= "#{request.base_url}/og-image.png" %>">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
