@@ -40,7 +40,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.0"
 
 # Send transactional email via Resend's HTTP API. DigitalOcean blocks outbound
 # SMTP ports (587/465) by default, so ActionMailer's built-in smtp delivery
