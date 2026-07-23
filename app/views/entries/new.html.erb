@@ -1,22 +1,43 @@
-<% content_for :title, "New entry — buildlog" %>
+<% content_for :title, "New entry - buildlog" %>
 
-<div class="card bg-base-100 shadow-sm">
-  <div class="card-body">
-    <h1 class="card-title text-2xl mb-2">New entry</h1>
+<section class="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.8fr)]">
+  <div class="surface-panel form-panel">
+    <div class="space-y-3">
+      <p class="section-label">Author mode</p>
+      <h1 class="section-title">New entry</h1>
+      <p class="panel-copy">Share what shipped, what changed, or what you learned today. Keep it direct. The feed does the archiving.</p>
+    </div>
 
-    <%= form_with model: @entry, class: "flex flex-col gap-4" do |form| %>
+    <%= form_with model: @entry, class: "mt-8 space-y-5" do |form| %>
       <% if @entry.errors.any? %>
-        <div role="alert" class="alert alert-error">
+        <div role="alert" class="flash flash--error">
           <span><%= @entry.errors.full_messages.to_sentence %></span>
         </div>
       <% end %>
 
-      <%= form.text_area :body, rows: 4, autofocus: true, placeholder: "What did you build or learn today?", class: "textarea textarea-bordered w-full" %>
-      <%= form.url_field :link, placeholder: "Link (optional)", class: "input input-bordered w-full" %>
+      <div class="space-y-2">
+        <%= form.label :body, "Today's note", class: "field-label" %>
+        <%= form.text_area :body, rows: 8, maxlength: Entry::BODY_MAX_LENGTH, autofocus: true, placeholder: "What did you build or learn today?", class: "field-input field-textarea" %>
+      </div>
 
-      <div>
-        <%= form.submit "Post", class: "btn btn-primary" %>
+      <div class="space-y-2">
+        <%= form.label :link, "Supporting link", class: "field-label" %>
+        <%= form.url_field :link, maxlength: Entry::LINK_MAX_LENGTH, placeholder: "https://example.com (optional)", class: "field-input" %>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <%= form.submit "Publish entry", class: "button-primary" %>
+        <span class="entry-footnote">Visible immediately on the public feed.</span>
       </div>
     <% end %>
   </div>
-</div>
+
+  <aside class="surface-panel side-panel">
+    <p class="section-label">Posting checklist</p>
+    <div class="space-y-4 text-sm text-slate-600">
+      <p>Lead with the concrete result, obstacle, or lesson. Short entries read better in sequence.</p>
+      <p>Add a link when there's a commit, demo, issue, or reference worth opening.</p>
+      <p>The archive is chronological, so each note should still make sense on its own.</p>
+    </div>
+  </aside>
+</section>

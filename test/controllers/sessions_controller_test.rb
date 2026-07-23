@@ -22,6 +22,16 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_nil cookies[:session_id]
   end
 
+  test "create rejects oversized credentials before authentication" do
+    post session_path, params: {
+      email_address: "a" * (User::EMAIL_MAX_LENGTH + 1),
+      password: "a" * (User::PASSWORD_MAX_LENGTH + 1)
+    }
+
+    assert_redirected_to new_session_path
+    assert_nil cookies[:session_id]
+  end
+
   test "destroy" do
     sign_in_as(User.take)
 

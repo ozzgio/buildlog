@@ -1,0 +1,25 @@
+<article class="entry-card">
+  <div class="entry-card__meta">
+    <span class="meta-chip"><%= entry_day_label(entry) %></span>
+    <time datetime="<%= entry.created_at.iso8601 %>" class="entry-card__time">
+      <%= entry_timestamp(entry) %>
+    </time>
+  </div>
+
+  <div class="entry-card__body">
+    <p class="entry-copy whitespace-pre-wrap"><%= entry.body %></p>
+
+    <div class="entry-card__footer">
+      <% if (external_url = safe_external_url(entry.link)) %>
+        <%= link_to external_url, class: "entry-link", target: "_blank", rel: "noopener" do %>
+          <span>Visit <%= entry_link_label(entry.link) %></span>
+          <span aria-hidden="true">-&gt;</span>
+        <% end %>
+      <% else %>
+        <span class="entry-footnote">Plain-text build note</span>
+      <% end %>
+
+      <%= link_to "Open note", entry_path(entry), class: "entry-open-link" %>
+    </div>
+  </div>
+</article>

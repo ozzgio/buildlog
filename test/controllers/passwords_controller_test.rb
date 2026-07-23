@@ -26,6 +26,13 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "reset instructions sent"
   end
 
+  test "create rejects oversized email before lookup" do
+    post passwords_path, params: { email_address: "a" * (User::EMAIL_MAX_LENGTH + 1) }
+
+    assert_enqueued_emails 0
+    assert_redirected_to new_session_path
+  end
+
   test "edit" do
     get edit_password_path(@user.password_reset_token)
     assert_response :success
@@ -58,6 +65,18 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_notice "Passwords did not match"
+  end
+
+  test "update rejects oversized passwords" do
+    token = @user.password_reset_token
+
+    assert_no_changes -> { @user.reload.password_digest } do
+      put password_path(token), params: {
+        password: "a" * (User::PASSWORD_MAX_LENGTH + 1),
+        password_confirmation: "a" * (User::PASSWORD_MAX_LENGTH + 1)
+      }
+      assert_redirected_to edit_password_path(token)
+    end
   end
 
   private

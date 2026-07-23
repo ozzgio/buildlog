@@ -35,7 +35,7 @@ social_links = [
 ]
 %>
 <% social_links.each do |item| %>
-  <% link = link_to(item[:icon], item[:url], class: "btn btn-ghost btn-sm", title: item[:title], target: "_blank", rel: "noopener") %>
+  <% link = link_to(item[:icon], item[:url], class: "icon-button", title: item[:title], target: "_blank", rel: "noopener") %>
   <% if local_assigns[:li] %>
     <li><%= link %></li>
   <% else %>

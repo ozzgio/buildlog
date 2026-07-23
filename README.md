@@ -1,38 +1,86 @@
 # buildlog
 
-A public build-log microblog — short daily entries about what I'm building and learning. The first app in a build-in-public Rails portfolio (a Shape Up "bet"). Public feed (unauthenticated), auth-gated posting for the single author.
+A public build-log microblog for short daily entries about what is being built and learned. This is the first app in the Rails portfolio Shape Up bet: public feed for readers, auth-gated posting for the single author.
+
+## Product Shape
+
+- Public feed, newest first.
+- Individual entry pages for durable links.
+- RSS feed for following without social platforms.
+- Author-only posting flow with Rails built-in authentication.
+- Lightweight visual identity distinct from `ozzo.blog`: logbook icon, mint paper background, teal ink, and coral accent.
 
 ## Stack
 
-- Rails 8.1 (built-in auth, Solid Queue/Cache/Cable)
-- SQLite in dev **and** production — no Postgres, no Redis
-- Tailwind CSS v4 + DaisyUI 5 (`@plugin "daisyui"`; the npm `daisyui` package supplies the plugin, Tailwind is built by `tailwindcss-rails`)
-- Kamal for deploy, GitHub Container Registry for images
+- Rails 8.1 with built-in auth and Solid Queue/Cache/Cable.
+- SQLite in development and production. No Postgres, no Redis.
+- Tailwind CSS v4 plus DaisyUI 5.
+- Kamal deploys production images to DigitalOcean via GitHub Container Registry.
 
-## Local development
+## Local Development
 
-Requires Ruby 3.4.1 (`.ruby-version`) and Node 22.
+Requires Ruby 3.4.1 and Node 22.
 
 ```sh
-npm install            # daisyUI Tailwind plugin (needed before the first asset build)
-bin/rails db:prepare   # create + migrate the SQLite database
-bin/dev                # foreman: Rails server + Tailwind watch → http://localhost:3000
+npm install
+bin/rails db:prepare
+bin/dev
 ```
+
+The development server runs at `http://localhost:3000`.
 
 Tests:
 
 ```sh
-bin/rails test         # unit + integration (needs `npm install` — CI builds Tailwind first)
-bin/rails test:system  # additionally needs Chrome/Chromium installed
+bin/rails test
+bin/rails test:system
 ```
+
+If SQLite cannot open the repo-mounted `storage/*.sqlite3` files on an external volume, use a temp database for local verification:
+
+```sh
+DATABASE_URL=sqlite3:///tmp/buildlog-dev.sqlite3 bin/rails db:prepare
+DATABASE_URL=sqlite3:///tmp/buildlog-dev.sqlite3 bin/rails server
+```
+
+## Roadmap
+
+The roadmap uses compact Mermaid flowcharts with short labels and one planning question per diagram.
+
+### Bet Flow
+
+```mermaid
+%%{init: { "theme": "base", "themeVariables": { "fontSize": "13px" } }}%%
+flowchart TB
+    bet["Bet 1"]:::core --> core["Core feed"]:::done
+    core --> polish["UI polish"]:::done
+    polish --> structure["Structure"]:::next
+    structure --> integrate["Integrations"]:::later
+    integrate --> ship["Ship"]:::ship
+
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a;
+    classDef done fill:#ecfdf5,stroke:#059669,color:#065f46;
+    classDef next fill:#f8fafc,stroke:#64748b,color:#334155;
+    classDef later fill:#fff7ed,stroke:#ea580c,color:#7c2d12;
+    classDef ship fill:#fef2f2,stroke:#dc2626,color:#7f1d1d;
+```
+
+## Current Priorities
+
+1. Keep the public feed simple and readable.
+2. Add tags and filtering only after the daily posting habit is stable.
+3. Link the finished project from `ozzo.blog/projects`.
+4. Capture launch material from real buildlog entries, not a separate content process.
 
 ## Deploy
 
-Deployed with Kamal to a DigitalOcean droplet; images pushed to `ghcr.io/ozzgio/buildlog`. Servers, registry and secrets live in `config/deploy.yml` and `.kamal/secrets`:
+Production is deployed with Kamal to a DigitalOcean droplet. Images are pushed to `ghcr.io/ozzgio/buildlog`.
 
-- `RAILS_MASTER_KEY` is read from `config/master.key` — gitignored, never committed.
-- `KAMAL_REGISTRY_PASSWORD` is resolved from `gh auth token` (requires the `write:packages` scope on the GitHub token).
+Secrets live outside the repository:
+
+- `RAILS_MASTER_KEY` is read from `config/master.key`.
+- `KAMAL_REGISTRY_PASSWORD` is resolved from `gh auth token`.
 
 ```sh
-bin/kamal deploy       # build → push to GHCR → pull + restart on the server
+bin/kamal deploy
 ```

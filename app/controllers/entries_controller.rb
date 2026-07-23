@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: :show
 
   def index
-    @entries = Entry.all
+    @entries = Entry.public_feed.to_a
 
     respond_to do |format|
       format.html

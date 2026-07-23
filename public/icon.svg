@@ -1,4 +1,9 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="112" fill="#422ad5"/>
-  <text x="256" y="352" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="300" font-weight="700" fill="#ffffff" text-anchor="middle">b</text>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">buildlog icon</title>
+  <rect width="512" height="512" rx="88" fill="#0f3f4a"/>
+  <rect x="96" y="92" width="320" height="328" rx="34" fill="#f7fffb"/>
+  <path d="M148 160h152M148 224h216M148 288h180" stroke="#122026" stroke-width="28" stroke-linecap="round"/>
+  <path d="M148 354h120" stroke="#e11d48" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="354" cy="354" r="31" fill="#14b8a6"/>
+  <path d="M354 321v66M321 354h66" stroke="#f7fffb" stroke-width="18" stroke-linecap="round"/>
 </svg>
