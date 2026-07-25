@@ -7,6 +7,7 @@ A public build-log microblog for short daily entries about what is being built a
 - Public feed, newest first.
 - Individual entry pages for durable links.
 - RSS feed for following without social platforms.
+- Feedback page with a configurable public form plus GitHub Issues for developer feedback.
 - Author-only posting flow with Rails built-in authentication.
 - Lightweight visual identity distinct from `ozzo.blog`: logbook icon, mint paper background, teal ink, and coral accent.
 
@@ -68,9 +69,9 @@ flowchart TB
 ## Current Priorities
 
 1. Keep the public feed simple and readable.
-2. Add tags and filtering only after the daily posting habit is stable.
-3. Link the finished project from `ozzo.blog/projects`.
-4. Capture launch material from real buildlog entries, not a separate content process.
+2. Link the finished project from `ozzo.blog/projects`.
+3. Capture launch material from real buildlog entries, not a separate content process.
+4. Keep tags, filtering, search, and MCP out of Bet 1 unless a later pitch reopens them.
 
 ## Deploy
 
@@ -80,6 +81,7 @@ Secrets live outside the repository:
 
 - `RAILS_MASTER_KEY` is read from `config/master.key`.
 - `KAMAL_REGISTRY_PASSWORD` is resolved from `gh auth token`.
+- `BUILDLOG_FEEDBACK_URL` points to the public Tally form embedded at `/feedback` (`https://tally.so/r/QKa62p`).
 
 ```sh
 bin/kamal deploy

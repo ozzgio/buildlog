@@ -1,0 +1,43 @@
+<% content_for :title, "Feedback - buildlog" %>
+<% content_for :description, "Send feedback about buildlog or open a GitHub issue." %>
+
+<section class="feedback-shell">
+  <div class="space-y-6">
+    <%= link_to entries_path, class: "button-ghost" do %>
+      <span aria-hidden="true">&lt;-</span>
+      <span>Back to feed</span>
+    <% end %>
+
+    <div class="space-y-4">
+      <p class="section-label">Feedback</p>
+      <h1 class="section-title max-w-3xl">Tell me what is unclear, useful, or missing.</h1>
+      <p class="hero-copy">
+        Buildlog is intentionally small. The fastest useful signal is a concrete note about what you expected to see, what confused you, or what made the project easier to understand.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <%= link_to "Open GitHub issue", buildlog_github_issues_url, class: "button-secondary", target: "_blank", rel: "noopener" %>
+      <%= link_to "Read the latest notes", entries_path(anchor: "feed"), class: "button-secondary" %>
+    </div>
+  </div>
+
+  <aside class="surface-panel feedback-panel">
+    <% if (feedback_url = buildlog_feedback_url) %>
+      <iframe
+        src="<%= feedback_url %>"
+        title="Buildlog feedback form"
+        class="feedback-frame"
+        loading="lazy">
+      </iframe>
+    <% else %>
+      <div class="empty-state">
+        <p class="section-label">Form pending</p>
+        <h2 class="compact-title">The public form URL is not configured yet.</h2>
+        <p class="panel-copy">
+          The app is ready for the Tally form. Until the form URL is added in production, GitHub Issues is the active feedback path.
+        </p>
+      </div>
+    <% end %>
+  </aside>
+</section>

@@ -6,6 +6,7 @@ class EntriesTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "buildlog"
     assert_text entries(:one).body
+    assert_link "Send feedback", href: feedback_path
   end
 
   test "new entry requires sign in" do

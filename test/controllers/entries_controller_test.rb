@@ -4,6 +4,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   test "index renders the public feed without authentication" do
     get entries_url
     assert_response :success
+    assert_select "a[href=?]", feedback_path, text: "Send feedback"
   end
 
   test "feed renders a valid RSS document" do
