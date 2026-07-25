@@ -23,15 +23,16 @@
   </div>
 
   <aside class="surface-panel feedback-panel">
-    <% if (feedback_url = buildlog_feedback_url) %>
+    <% if (feedback_url = buildlog_feedback_embed_url) %>
       <iframe
+        data-tally-src="<%= feedback_url %>"
         src="<%= feedback_url %>"
         title="Buildlog feedback form"
         class="feedback-frame"
         loading="lazy">
       </iframe>
     <% else %>
-      <div class="empty-state">
+      <div class="empty-state feedback-empty-state">
         <p class="section-label">Form pending</p>
         <h2 class="compact-title">The public form URL is not configured yet.</h2>
         <p class="panel-copy">
