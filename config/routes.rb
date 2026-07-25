@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :entries, only: %i[ index show new create ]
+  get "feedback", to: "feedback#show", as: :feedback
   get "feed", to: "entries#index", defaults: { format: :rss }, as: :feed
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

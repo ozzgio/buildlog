@@ -113,8 +113,13 @@ body {
     @apply grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.8fr)] lg:items-end;
   }
 
+  .feedback-shell {
+    @apply grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(22rem,1fr)] lg:items-start;
+  }
+
   .hero-title,
-  .section-title {
+  .section-title,
+  .compact-title {
     font-family: "Instrument Serif", ui-serif, Georgia, serif;
     letter-spacing: 0;
     line-height: 0.95;
@@ -126,6 +131,10 @@ body {
 
   .section-title {
     @apply text-[clamp(2.2rem,5vw,3.6rem)] text-slate-950;
+  }
+
+  .compact-title {
+    @apply text-3xl text-slate-950;
   }
 
   .hero-copy {
@@ -199,6 +208,14 @@ body {
 
   .article-panel {
     @apply max-w-4xl;
+  }
+
+  .feedback-panel {
+    @apply min-h-[32rem] p-0;
+  }
+
+  .feedback-frame {
+    @apply h-[38rem] min-h-[32rem] w-full rounded-lg border-0 bg-white;
   }
 
   .form-panel,

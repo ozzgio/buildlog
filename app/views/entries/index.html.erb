@@ -11,6 +11,7 @@
     <div class="flex flex-wrap gap-3">
       <a href="#feed" class="button-primary">Read the latest notes</a>
       <%= link_to "Follow via RSS", feed_path, class: "button-secondary" %>
+      <%= link_to "Send feedback", feedback_path, class: "button-secondary" %>
       <% if authenticated? %>
         <%= link_to "Write today's entry", new_entry_path, class: "button-secondary" %>
       <% end %>

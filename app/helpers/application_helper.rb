@@ -21,4 +21,12 @@ module ApplicationHelper
   rescue URI::InvalidURIError
     nil
   end
+
+  def buildlog_feedback_url
+    safe_external_url(ENV["BUILDLOG_FEEDBACK_URL"])
+  end
+
+  def buildlog_github_issues_url
+    "https://github.com/ozzgio/buildlog/issues"
+  end
 end
