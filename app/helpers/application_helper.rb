@@ -26,6 +26,27 @@ module ApplicationHelper
     safe_external_url(ENV["BUILDLOG_FEEDBACK_URL"])
   end
 
+  def buildlog_feedback_embed_url
+    feedback_url = buildlog_feedback_url
+    return unless feedback_url
+
+    uri = URI.parse(feedback_url)
+    return feedback_url unless uri.host == "tally.so"
+
+    uri.path = uri.path.sub(%r{\A/r/}, "/embed/")
+    query = Rack::Utils.parse_nested_query(uri.query)
+    query.merge!(
+      "alignLeft" => "1",
+      "hideTitle" => "1",
+      "transparentBackground" => "1",
+      "dynamicHeight" => "1"
+    )
+    uri.query = query.to_query
+    uri.to_s
+  rescue URI::InvalidURIError
+    nil
+  end
+
   def buildlog_github_issues_url
     "https://github.com/ozzgio/buildlog/issues"
   end

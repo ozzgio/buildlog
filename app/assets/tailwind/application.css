@@ -211,11 +211,15 @@ body {
   }
 
   .feedback-panel {
-    @apply min-h-[32rem] p-0;
+    @apply overflow-hidden p-0;
   }
 
   .feedback-frame {
-    @apply h-[38rem] min-h-[32rem] w-full rounded-lg border-0 bg-white;
+    @apply min-h-[58rem] w-full rounded-lg border-0 bg-transparent;
+  }
+
+  .feedback-empty-state {
+    @apply p-6 md:p-8;
   }
 
   .form-panel,
