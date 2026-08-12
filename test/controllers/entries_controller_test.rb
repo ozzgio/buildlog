@@ -7,6 +7,18 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", feedback_path, text: "Send feedback"
   end
 
+  test "show uses the entry content for the document title and heading" do
+    entry = entries(:one)
+    helpers = ApplicationController.helpers
+
+    get entry_url(entry)
+
+    assert_response :success
+    assert_select "title", helpers.entry_page_title(entry)
+    assert_select "article[aria-labelledby='entry-title']"
+    assert_select "h1#entry-title", helpers.entry_heading(entry)
+  end
+
   test "feed renders a valid RSS document" do
     get feed_url
     assert_response :success

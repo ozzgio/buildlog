@@ -68,16 +68,19 @@
           </div>
 
           <div class="header-actions">
-            <div class="social-strip" aria-label="External links">
+            <nav class="social-strip" aria-label="External links">
               <%= render "layouts/social_links" %>
-            </div>
+            </nav>
 
-            <% if authenticated? %>
-              <%= link_to "New entry", new_entry_path, class: "button-primary" %>
-              <%= button_to "Sign out", session_path, method: :delete, class: "button-secondary", form_class: "inline-flex" %>
-            <% else %>
-              <%= link_to "Sign in", new_session_path, class: "button-secondary" %>
-            <% end %>
+            <div class="header-utilities">
+              <%= link_to "Feedback", feedback_path, class: "button-secondary" %>
+              <% if authenticated? %>
+                <%= link_to "New entry", new_entry_path, class: "button-primary" %>
+                <%= button_to "Sign out", session_path, method: :delete, class: "button-secondary", form_class: "inline-flex" %>
+              <% else %>
+                <%= link_to "Sign in", new_session_path, class: "button-secondary" %>
+              <% end %>
+            </div>
           </div>
         </div>
       </header>
