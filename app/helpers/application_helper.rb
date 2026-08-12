@@ -7,6 +7,18 @@ module ApplicationHelper
     entry.created_at.strftime("%b %-d")
   end
 
+  def entry_excerpt(entry, length: 88)
+    entry.body.to_s.squish.truncate(length, omission: "…")
+  end
+
+  def entry_heading(entry)
+    "Build note: #{entry_excerpt(entry)}"
+  end
+
+  def entry_page_title(entry)
+    "#{entry_day_label(entry)}: #{entry_excerpt(entry, length: 60)} | buildlog"
+  end
+
   def entry_link_label(link)
     URI.parse(link).host&.delete_prefix("www.") || link
   rescue URI::InvalidURIError

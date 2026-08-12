@@ -1,4 +1,5 @@
-<% content_for :title, "buildlog" %>
+<% content_for :title, entry_page_title(@entry) %>
+<% content_for :description, entry_excerpt(@entry, length: 155) %>
 
 <section class="space-y-6">
   <%= link_to entries_path, class: "button-ghost" do %>
@@ -6,11 +7,11 @@
     <span>Back to feed</span>
   <% end %>
 
-  <article class="surface-panel article-panel">
+  <article class="surface-panel article-panel" aria-labelledby="entry-title">
     <div class="space-y-6">
       <div class="space-y-3">
         <p class="section-label">Public entry</p>
-        <h1 class="section-title max-w-3xl">A build note from the workshop.</h1>
+        <h1 id="entry-title" class="section-title max-w-3xl"><%= entry_heading(@entry) %></h1>
         <div class="flex flex-wrap items-center gap-3 text-sm text-slate-600">
           <span class="meta-chip"><%= entry_day_label(@entry) %></span>
           <time datetime="<%= @entry.created_at.iso8601 %>"><%= entry_timestamp(@entry) %></time>
