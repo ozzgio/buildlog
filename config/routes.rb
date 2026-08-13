@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   # Keep unknown public URLs inside the app chrome instead of exposing Rails'
   # development exception page on the NUC preview host.
-  match "*unmatched_path", to: "errors#not_found", via: :all
+  match "*unmatched_path", to: "errors#not_found", via: %i[ get head ]
 end
