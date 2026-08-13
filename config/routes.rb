@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "entries#index"
+
+  # Keep unknown public URLs inside the app chrome instead of exposing Rails'
+  # development exception page on the NUC preview host.
+  match "*unmatched_path", to: "errors#not_found", via: :all
 end
