@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def entry_heading(entry)
-    "Build note: #{entry_excerpt(entry)}"
+    "Build note · #{entry_day_label(entry)}"
   end
 
   def entry_page_title(entry)
