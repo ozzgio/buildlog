@@ -7,7 +7,7 @@ image: ozzgio/buildlog
 # Deploy to these servers.
 servers:
   web:
-    - 167.172.172.142
+    - 91.99.217.181
   # job:
   #   hosts:
   #     - 192.168.0.1
