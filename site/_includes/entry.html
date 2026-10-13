@@ -1,0 +1,14 @@
+<article class="entry-card">
+  <div class="entry-card__meta">
+    <span class="meta-chip">{{ entry.date | date: '%b %-d' }}</span>
+    <time datetime="{{ entry.date | date_to_xmlschema }}" class="entry-card__time">{{ entry.date | date: '%A, %b %-d, %Y - %-I:%M %p' }}</time>
+  </div>
+  <div class="entry-card__body">
+    <div class="entry-copy space-y-4">{{ entry.content }}</div>
+    <div class="entry-card__footer">
+      {% if entry.link %}<a href="{{ entry.link | escape }}" class="entry-link" target="_blank" rel="noopener">Reference link <span aria-hidden="true">-&gt;</span></a>
+      {% else %}<span class="entry-footnote">Plain-text build note</span>{% endif %}
+      <a href="{{ entry.url | relative_url }}" class="entry-open-link">Open note</a>
+    </div>
+  </div>
+</article>

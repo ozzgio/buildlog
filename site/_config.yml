@@ -1,0 +1,20 @@
+title: buildlog
+description: Short daily notes from the workshop.
+url: https://log.ozzo.blog
+baseurl: ""
+timezone: Europe/Rome
+collections:
+  entries:
+    output: true
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: entries
+    values:
+      layout: entry
+exclude:
+  - README.md

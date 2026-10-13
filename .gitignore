@@ -39,3 +39,12 @@
 
 # Ignore node_modules (used only to install the daisyUI Tailwind plugin).
 /node_modules
+
+# Static site build outputs.
+/_site
+/site/assets/style.css
+/site/.jekyll-cache
+/site/icon.svg
+/site/icon.png
+/site/og-image.png
+/site/robots.txt

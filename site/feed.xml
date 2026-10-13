@@ -1,0 +1,19 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>buildlog</title>
+  <description>A public build-log — what I build and learn.</description>
+  <link>{{ '/' | absolute_url | xml_escape }}</link>
+  <language>en-us</language>
+  {% assign entries = site.entries | sort: 'date' | reverse %}
+  {% for entry in entries limit: 50 %}<item>
+    {% assign legacy_path = entry.url | split: '/' | last | prepend: '/entries/' %}
+    <title>{{ entry.date | date: '%b %-d, %Y' }}</title>
+    <description>{{ entry.content | xml_escape }}</description>
+    <pubDate>{{ entry.date | date_to_rfc822 }}</pubDate>
+    <link>{{ legacy_path | absolute_url | xml_escape }}</link>
+    <guid>{{ legacy_path | absolute_url | xml_escape }}</guid>
+  </item>{% endfor %}
+</channel></rss>

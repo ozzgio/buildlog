@@ -1,5 +1,14 @@
 # buildlog
 
+## Static hosting migration
+
+The public feed is prepared for GitHub Pages in [site/README.md](site/README.md).
+It preserves the eight existing public entries, durable entry URLs, RSS and
+feedback, and replaces the author web editor with Markdown published through Git.
+Production still runs the Rails app on Hetzner until the documented cutover is
+approved and verified. The Rails instructions below describe that original app;
+their references to DigitalOcean are historical.
+
 A public build-log microblog for short daily entries about what is being built and learned. This is the first app in the Rails portfolio Shape Up bet: public feed for readers, auth-gated posting for the single author.
 
 ## Product Shape
