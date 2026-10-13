@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title | default: site.title | escape }}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="{{ page.description | default: site.description | escape }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="buildlog">
+    <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+    <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:image" content="{{ '/og-image.png' | absolute_url }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="{{ '/icon.svg' | relative_url }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ '/icon.png' | relative_url }}">
+    <link rel="alternate" type="application/rss+xml" title="buildlog RSS feed" href="{{ '/feed.xml' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  </head>
+  <body>
+    <div class="site-chrome">
+      <div class="site-glow site-glow--amber" aria-hidden="true"></div>
+      <div class="site-glow site-glow--slate" aria-hidden="true"></div>
+      <header class="mx-auto max-w-6xl px-5 pt-6 pb-4">
+        <div class="site-header">
+          <a href="{{ '/' | relative_url }}" class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true"><img src="{{ '/icon.svg' | relative_url }}" alt="" class="h-7 w-7"></span>
+            <span class="flex flex-col gap-1">
+              <span class="brand-name">buildlog</span>
+              <span class="brand-tagline">{{ site.description }}</span>
+            </span>
+          </a>
+          <div class="header-actions">
+            <nav class="social-strip" aria-label="External links">{% include social_links.html %}</nav>
+            <a href="{{ '/feedback/' | relative_url }}" class="button-secondary">Feedback</a>
+          </div>
+        </div>
+      </header>
+      <main class="mx-auto max-w-6xl px-5 pb-16">{{ content }}</main>
+    </div>
+  </body>
+</html>

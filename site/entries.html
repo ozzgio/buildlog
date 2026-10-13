@@ -1,0 +1,8 @@
+---
+permalink: /entries/
+---
+{% assign entries = site.entries | sort: 'date' | reverse %}
+<section class="space-y-6">
+  <h1 class="section-title">Daily notes, kept public.</h1>
+  {% for entry in entries limit: 50 %}{% include entry.html %}{% endfor %}
+</section>

@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<section class="space-y-6">
+  <a href="{{ '/' | relative_url }}" class="button-ghost"><span aria-hidden="true">&lt;-</span> Back to feed</a>
+  <article class="surface-panel article-panel space-y-6">
+    <div class="space-y-3">
+      <p class="section-label">Public entry</p>
+      <h1 class="section-title max-w-3xl">A build note from the workshop.</h1>
+      <time datetime="{{ page.date | date_to_xmlschema }}" class="entry-footnote">{{ page.date | date: '%A, %b %-d, %Y - %-I:%M %p' }}</time>
+    </div>
+    <div class="article-prose space-y-4">{{ content }}</div>
+    {% if page.link %}<div class="article-link-row"><span class="entry-footnote">Reference link</span><a href="{{ page.link | escape }}" class="entry-link" target="_blank" rel="noopener">{{ page.link | escape }} <span aria-hidden="true">-&gt;</span></a></div>{% endif %}
+  </article>
+</section>

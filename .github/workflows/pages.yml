@@ -1,0 +1,61 @@
+name: Static buildlog
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Build the existing Tailwind and daisyUI styles
+        run: bundle exec tailwindcss -i app/assets/tailwind/application.css -o site/assets/style.css --minify
+      - name: Reuse the existing public assets
+        run: |
+          cp public/icon.svg public/icon.png public/og-image.png public/robots.txt site/
+          mkdir -p _site
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: site
+          destination: _site
+      - name: Preserve the existing RSS endpoint
+        run: cp _site/feed.xml _site/feed
+      - name: Verify published entries and RSS
+        run: bundle exec ruby script/check_static_site.rb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: static-buildlog-preview
+          path: _site
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v5
+        id: deployment

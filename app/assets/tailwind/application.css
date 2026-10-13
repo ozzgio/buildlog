@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
 
 @import "tailwindcss";
+@source "../../../site";
 @plugin "daisyui" {
   themes: light --default;
 }
