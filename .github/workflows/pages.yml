@@ -39,7 +39,7 @@ jobs:
         with:
           name: static-buildlog-preview
           path: _site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'
 
   deploy:
